@@ -2,12 +2,17 @@
 alias sudo='doas'
 alias mon='btop'
 
+# FFMPEG
+# /dev/video0 is the built-in camera. /dev/video2 is the RHS USB port.
+alias foto='ffmpeg -f video4linux2 -s 640x480 -i /dev/video2 -ss 0:0:2 -frames 1 ~/Pictures/Screenshots/out.jpg'
+
 # Network shortcuts
-alias vpnu='doas wg-quick up ton0'
-alias vpnd='doas wg-quick down ton0'
+alias vpnu='doas wg-quick up tun0'
+alias vpnd='doas wg-quick down tun0'
 alias ports='netstat -tulanp'
 
 # Terminal shortcuts
+alias v='nvim'
 alias vim='nvim'
 alias ls='eza -al --color=auto --group-directories-first'
 alias ls='eza -al --color=always --group-directories-first' # my preferred listing
