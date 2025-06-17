@@ -63,7 +63,7 @@
     text_icon_padding = 0
 
     frame_width = 2
-    frame_color = "#aaaaaa"
+    frame_color = "#00fcfc"
     gap_size = 0
     separator_color = frame
     sort = yes
@@ -189,19 +189,19 @@
     per_monitor_dpi = false
 
 [urgency_low]
-    background = "#2d2a2e"
+    background = "#532b88"
     foreground = "#fcfcfa"
     frame_color = "#78dce8"
     timeout = 10
 
 [urgency_normal]
-    background = "#2d2a2e"
+    background = "#532b88"
     foreground = "#fcfcfa"
     frame_color = "#78dce8"
     timeout = 10
 
 [urgency_critical]
-    background = "#2d2a2e"
+    background = "#532b88"
     foreground = "#fcfcfa"
     frame_color = "#ff6188"
     timeout = 0
