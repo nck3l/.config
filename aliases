@@ -1,19 +1,25 @@
 # System shortcuts
-alias sudo='doas'
+#alias sudo='doas'
 alias mon='btop'
+alias qcfg='nvim ~/.config/qtile/config.py'
+
+# XBPS Shortcuts
+alias xin='sudo xbps-install -S'
+alias xrm='sudo xbps-remove'
+alias xsrch='xbps-query -Rs'
 
 # FFMPEG
 # /dev/video0 is the built-in camera. /dev/video2 is the RHS USB port.
 alias foto='ffmpeg -f video4linux2 -s 640x480 -i /dev/video2 -ss 0:0:2 -frames 1 ~/Pictures/Screenshots/out.jpg'
 
 # Network shortcuts
-alias vpnu='doas wg-quick up tun0'
-alias vpnd='doas wg-quick down tun0'
+alias vpnu='sudo wg-quick up tun0'
+alias vpnd='sudo wg-quick down tun0'
 alias ports='netstat -tulanp'
 
 # Terminal shortcuts
-alias v='nvim'
 alias vim='nvim'
+alias v='nvim'
 alias ls='eza -al --color=auto --group-directories-first'
 alias ls='eza -al --color=always --group-directories-first' # my preferred listing
 alias la='eza -a --color=always --group-directories-first'  # all files and dirs
@@ -22,15 +28,14 @@ alias lt='eza -aT --color=always --group-directories-first' # tree listing
 alias l.='eza -al --color=always --group-directories-first ../' # ls on the PARENT directory
 alias l..='eza -al --color=always --group-directories-first ../../' # ls on directory 2 levels up
 alias l...='eza -al --color=always --group-directories-first ../../../' # ls on directory 3 levels up
-alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
 # adding flags
-alias df='df -h'               # human-readable sizes
+alias df='dust'               # human-readable sizes
 alias free='free -m'           # show sizes in MB
-alias grep='grep --color=auto' # colorize output (good for log files)
-alias psa="ps auxf"
-alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
-alias psmem='ps auxf | sort -nr -k 4'
-alias pscpu='ps auxf | sort -nr -k 3'
+alias grep='rg --color=auto' # colorize output (good for log files)
+alias psa="procs auxf"
+alias psgrep="procs aux | grep -v grep | grep -i -e VSZ -e"
+alias psmem='procs auxf | sort -nr -k 4'
+alias pscpu='procs auxf | sort -nr -k 3'
