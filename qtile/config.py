@@ -29,16 +29,15 @@ import subprocess
 from libqtile import bar, extension, hook, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, Key, KeyChord, Match, Screen
 from libqtile.lazy import lazy
+import colors
 
 # Definitions
 mod = "mod4"            	# Sets mod key to SUPER/WINDOWS
 mod1 = "control"			# Shortcut for the control key
-myTerm = "kitty"      		# My terminal of choice
-myAltTerm = "st"			# Alternate terminal
-myBrowser = "brave"     	# My browser of choice
+myTerm = "st"         		# My terminal of choice
+myBrowser = "firefox"     	# My browser of choice
 myEditor = "nvim" 			# My editor of choice
 myOffice = "libreoffice"	# My office suite of choice
-myFiles = "thunar"			# My GUI File Manager of choice
 myIDE = "geany"				# My GUI editor of choice
 myCalc = "qualculate"		# My calculator of choice
 dmenufont = "Ubuntu Mono:size=10"
@@ -62,14 +61,13 @@ def maximize_by_switching_layout(qtile):
 keys = [
     # Program/Functions launchers
     Key([mod], "Return", lazy.spawn(myTerm), desc="Terminal"),
-    Key([mod], "r", lazy.spawn("dmenu_run -m 0 -fn dmenufont -nb #222222 -nf #bbbbbb -sb #eeeeee -sf #444444"), desc='Run Launcher'),
+    Key([mod], "r", lazy.spawn("dmenu_run -m 0 -fn dmenufont -nb #000000 -nf #FFFFFF -sb #532b88 -sf #eeeeee"), desc='Run Launcher'),
     Key([mod], "w", lazy.spawn(myBrowser), desc='Web browser'),
-    Key([mod], "t", lazy.spawn(myFiles), desc='File Manager'),
 	Key([mod], "g", lazy.spawn(myIDE), desc='Geany Editor'),
     Key([mod], "c", lazy.spawn(myCalc), desc='Qualculate'),
     Key([mod], "o", lazy.spawn(myOffice), desc='LibreOffice'),
     Key([mod], "v", lazy.spawn("vlc"), desc='VLC Media Player'),
-    Key([mod, mod1], "v", lazy.spawn("zathura ~/help/VimShortcuts.pdf"), desc='Vim Shortcuts'),
+    Key([mod, mod1], "v", lazy.spawn(myTerm + " -e zathura ~/help/VimShortcuts.pdf"), desc='Vim Shortcuts'),
     Key([mod], "x", lazy.spawn("slock"), desc='Suckless Screen Locker'),
     Key([],	"Print", lazy.spawn("maim -i $(xdotool getactivewindow) ~/Pictures/Screenshots/window-$(date '+%y%m%d-%H%M-%S').png"), desc='Screenshot Active Window'),
     Key(["shift"], "Print", lazy.spawn("maim ~/Pictures/Screenshots/screen-$(date '+%y%m%d-%H%M-%S').png"), desc='Screenshot Screen'),
@@ -98,29 +96,6 @@ keys = [
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
-
-    # Move windows between left/right columns or move up/down in current stack.
-    # Moving out of range in Columns layout will create new column.
-    Key([mod, "shift"], "h",
-        lazy.layout.shuffle_left(),
-        lazy.layout.move_left().when(layout=["treetab"]),
-        desc="Move window to the left/move tab left in treetab"),
-
-    Key([mod, "shift"], "l",
-        lazy.layout.shuffle_right(),
-        lazy.layout.move_right().when(layout=["treetab"]),
-        desc="Move window to the right/move tab right in treetab"),
-
-    Key([mod, "shift"], "j",
-        lazy.layout.shuffle_down(),
-        lazy.layout.section_down().when(layout=["treetab"]),
-        desc="Move window down/move down a section in treetab"
-    ),
-    Key([mod, "shift"], "k",
-        lazy.layout.shuffle_up(),
-        lazy.layout.section_up().when(layout=["treetab"]),
-        desc="Move window downup/move up a section in treetab"
-    ),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -159,22 +134,20 @@ groups = []
 group_names = ["1", "2", "3", "4", "5", "6", "7"]
 
 # Uncomment only one of the following lines
-group_labels = ["", "", "", "", "", "", ""]
-#group_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-#group_labels = ["", "WWW", "👁", "DOC", "", "", "MUS", "✀", "GFX", "⎙"]
+group_labels = ["", "", "", "", "", "", ""]
 
 # The default layout for each of the 7 workspaces
 group_layouts = ["monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall"]
 
-#for i in range(len(group_names)):
-#    groups.append(
-#        Group(
-#            name=group_names[i],
-#            layout=group_layouts[i].lower(),
-#            label=group_labels[i],
-#        ))
+for i in range(0, 7):
+    groups.append(
+        Group(
+            name=group_names[i],
+            layout=group_layouts[i].lower(),
+            label=group_labels[i],
+        ))
 
-for i in "1234567":
+for i in groups:
     keys.extend(
         [
             # mod1 + letter of group = switch to group
@@ -193,24 +166,11 @@ for i in "1234567":
             ),
         ]
     )
-    
-def Nord_colors():
-	return [
-    ["#2E3440", "#2E3440"], # color[0]
-    ["#D8DEE9", "#D8DEE9"], # color[1]
-    ["#3B4252", "#3B4252"], # color[2]
-    ["#BF616A", "#BF616A"], # color[3]
-    ["#A3BE8C", "#A3BE8C"], # color[4]
-    ["#EBCB8B", "#EBCB8B"], # color[5]
-    ["#81A1C1", "#81A1C1"], # color[6]
-    ["#B48EAD", "#B48EAD"], # color[7]
-    ["#88C0D0", "#88C0D0"], # color[8]
-    ["#7d7d7d", "#7d7d7d"]  # color[9]
-    ]
-colors = Nord_colors()
+
+colors = colors.TomorrowNight
 
 layout_theme = {"border_width": 2,
-                "margin": 12,
+                "margin": 0,
                 "border_focus": colors[8],
                 "border_normal": colors[0]
                 }
@@ -227,32 +187,11 @@ layouts = [
     #layout.Matrix(**layout_theme),
     #layout.Stack(**layout_theme, num_stacks=2),
     #layout.Columns(**layout_theme),
-    #layout.TreeTab(
-    #     font = "Ubuntu Bold",
-    #     fontsize = 11,
-    #     border_width = 0,
-    #     bg_color = colors[0],
-    #     active_bg = colors[8],
-    #     active_fg = colors[2],
-    #     inactive_bg = colors[1],
-    #     inactive_fg = colors[0],
-    #     padding_left = 8,
-    #     padding_x = 8,
-    #     padding_y = 6,
-    #     sections = ["ONE", "TWO", "THREE"],
-    #     section_fontsize = 10,
-    #     section_fg = colors[7],
-    #     section_top = 15,
-    #     section_bottom = 15,
-    #     level_shift = 8,
-    #     vspace = 3,
-    #     panel_width = 240
-    #     ),
     #layout.Zoomy(**layout_theme),
 ]
 
 widget_defaults = dict(
-    font="Ubuntu Bold",
+    font="Ubuntu Mono",
     fontsize = 12,
     padding = 0,
     background=colors[0]
@@ -263,19 +202,13 @@ screens = [
 	Screen(
 		top = bar.Bar(
             [
-			widget.Spacer(length = 8),
-			widget.Image(
-                 filename = "~/.config/qtile/icons/dt-icon.png",
-                 scale = "False",
-#                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("qtilekeys-yad")},
+			widget.Spacer(length = 5),
+            widget.Image(
+                 filename = "~/.config/qtile/void_bg.png", scale = "True",
+                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e btop')}
                  ),
-			widget.Prompt(
-                 font = "Ubuntu Mono",
-                 fontsize=14,
-                 foreground = colors[1]
-				 ),
 			widget.GroupBox(
-                 fontsize = 11,
+                 fontsize = 12,
                  margin_y = 5,
                  margin_x = 14,
                  padding_y = 0,
@@ -285,98 +218,88 @@ screens = [
                  inactive = colors[9],
                  rounded = False,
                  highlight_color = colors[0],
-                 highlight_method = "line",
+                 highlight_method = "text",
+                 hide_unused = True,
                  this_current_screen_border = colors[7],
                  this_screen_border = colors [4],
-                 other_current_screen_border = colors[7],
-                 other_screen_border = colors[4],
+#                 other_current_screen_border = colors[7],
+#                 other_screen_border = colors[4],
                  ),
-        widget.TextBox(
-                 text = '|',
-                 font = "Ubuntu Mono",
-                 foreground = colors[9],
-                 padding = 2,
-                 fontsize = 14
-                 ),
-        widget.LaunchBar(
-                 progs = [("🦁", "brave", "Brave web browser"),
-                          ("🚀", "kitty", "Kitty terminal"),
-                          ("📁", "Thunar", "Thunar file manager"),
-                          ("🎸", "vlc", "VLC media player")
-                         ],
-                 fontsize = 12,
-                 padding = 12,
-                 foreground = colors[3],
-                ),
-        widget.TextBox(
-                 text = '|',
-                 font = "Ubuntu Mono",
-                 foreground = colors[9],
-                 padding = 2,
-                 fontsize = 14
-                 ),
-        widget.CurrentLayout(
-                 foreground = colors[1],
-                 padding = 5
-                 ),
-        widget.TextBox(
-                 text = '|',
-                 font = "Ubuntu Mono",
-                 foreground = colors[9],
-                 padding = 2,
-                 fontsize = 14
-                 ),
+        widget.Sep(linewidth = 1, padding = 5, foreground = colors[9]),
+        widget.CurrentLayoutIcon(
+                       foreground = colors[1],
+                       padding = 6, scale = 0.7
+                       ),
+        widget.Sep(linewidth = 1, padding = 5, foreground = colors[9]),
         widget.WindowName(
                  foreground = colors[6],
                  padding = 8,
                  max_chars = 40
                  ),
-        widget.GenPollText(
-                 update_interval = 300,
-                 func = lambda: subprocess.check_output("printf $(uname -r)", shell=True, text=True),
+        widget.CapsNumLockIndicator(
                  foreground = colors[3],
                  padding = 8,
-                 fmt = '❤  {}',
                  ),
         widget.CPU(
                  foreground = colors[4],
                  padding = 8,
-#                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e btop')},
+                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e btop')},
                  format = ' Cpu: {load_percent}%',
                  ),
+        widget.ThermalSensor(
+                tag_sensor = 'CPU',
+                foreground = colors[4],
+                metric = False,
+                threshold = 140,
+                ),
         widget.Memory(
-                 foreground = colors[8],
-                 padding = 8,
-#                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e btop')},
-                 format = '{MemUsed: .0f}{mm}',
-                 fmt = ' Mem: {}',
-                 ),
-        widget.DF(
-                 update_interval = 60,
                  foreground = colors[5],
                  padding = 8,
-#                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('notify-disk')},
-                 partition = '/',
-                 #format = '[{p}] {uf}{m} ({r:.0f}%)',
-                 format = '{uf}{m} free',
-                 fmt = '🖴  Disk: {}',
-                 visible_on_warn = False,
+                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e btop')},
+                 format = '{MemPercent: .0f}',
+                 fmt = ' Mem: {}%',
                  ),
-        widget.Volume(
-                 foreground = colors[7],
-                 padding = 8,
-                 fmt = '  Vol: {}',
-                 ),
+        widget.Wlan(
+                foreground = colors[6],
+                padding = 8,
+                interface = 'wlp2s0',
+                format = '{percent:2.0%}',
+                fmt = '{} ',
+                ethernet_interface = 'enp0s25',
+                ethernet_message_format = '',
+                disconnected_message = '',
+                ),
+        widget.GenPollText(
+                foreground = colors[7],
+                padding = 8,
+                name = 'Volume',
+                update_interval = 3,
+                fmt = '{}',
+                func = lambda: subprocess.check_output('/home/nick/.local/bin/vol.sh').decode('utf-8').strip(),
+                mouse_callbacks = {'Button1':lazy.widget['volume'].eval('self.update(self.poll())')},
+                ),
+        widget.Battery(
+                foreground = colors[8],
+                padding = 8,
+                battery = 0,
+                charge_char = '',
+                full_char = ' ',
+                full_short_text = ' ',
+                discharge_char =' ',
+                empty_char = ' ',
+                empty_short_text = ' ',
+                low_percentage = 0.1,
+                format = '{char} {percent:2.0%} {hour:d}:{min:02d}',
+                fmt = '{}',
+                ),
         widget.Clock(
-                 foreground = colors[8],
+                 foreground = colors[1],
                  padding = 8,
-#                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('notify-date')},
+                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn('notify-date')},
                  ## Uncomment for date and time
                  format = "%a, %e %B %y  %I:%M %p",
-                 ## Uncomment for time only
-                 # format = " %I:%M %p",
                  ),
-        widget.Spacer(length = 8),
+        widget.Spacer(length = 5),
         ],
 		24),
 	),
@@ -435,7 +358,7 @@ wl_input_rules = None
 @hook.subscribe.startup_once
 def start_once():
     home = os.path.expanduser('~')
-  #  subprocess.call([home + '/.config/qtile/autostart.sh'])
+    subprocess.call([home + '/.config/qtile/autostart.sh'])
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the
