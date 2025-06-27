@@ -1,3 +1,5 @@
+#! /bin/zsh
+
 setxkbmap -layout us &
 export $(dbus-launch)
 xinput set-prop 11 354 0.6 & # makes trackpoint track faster (higher numbers)
