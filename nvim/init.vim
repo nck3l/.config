@@ -38,16 +38,9 @@ set laststatus=2                " always show statusline
 " PLUGINS
 
 call plug#begin()
-" ColorScheme and theme
-Plug 'https://github.com/folke/tokyonight.nvim'
-
-" File Manager incorporation
-Plug 'https://github.com/vifm/vifm.vim'
-
 " Syntax Highlighting
 Plug 'https://github.com/vim-python/python-syntax'
 Plug 'https://github.com/kovetskiy/sxhkd-vim'
-"Plug 'https://github.com/PotatoesMaster/i3-vim-syntax'
 Plug 'https://github.com/rust-lang/rust.vim'
 Plug 'https://github.com/yuezk/vim-js'
 Plug 'https://github.com/maxmellon/vim-jsx-pretty'
