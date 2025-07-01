@@ -1,0 +1,43 @@
+# System shortcuts
+alias mon='btop'
+alias xin='doas xbps-install -S'
+alias xrm='doas xbps-remove -Rv'
+alias xorph='doas xbps-remove -o'
+alias xupg='doas xbps-install -Suv'
+alias xsrch='xbps-query -R'
+alias backup='cd / && doas rsync -aAXv --delete --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","swapfile","lost+found",".cache","Downloads",".VirtualBoxVMs",".ecryptfs",".mozilla"} / /mnt/backup/'
+alias restore='rsync -aAXv --delete --exclude="lost+found" /mnt/backup/ /mnt/system/' # where sda1 is mounted to /mnt/system and the backup drive to /mnt/backup/
+
+# WM Configs
+alias dwmcfg='nvim ~/.config/dwm-6.5/config.def.h'
+alias qmake='rm -f config.h && doas make install'
+alias qcfg='nvim ~/.config/qtile/config.py'
+alias bgc='feh --bg-fill --random ~/Pictures/Wallpapers/'
+alias gamma='xrandr --output LVDS-1 --gamma 0.9:1.0:1.0'
+
+# FFMPEG
+# /dev/video0 is the built-in camera. /dev/video2 is the RHS USB port.
+alias foto='ffmpeg -f video4linux2 -s 640x480 -i /dev/video2 -ss 0:0:2 -frames 1 ~/Pictures/Screenshots/out.jpg'
+
+# Network shortcuts
+alias vpnu='doas wg-quick up tun0'
+alias vpnd='doas wg-quick down tun0'
+
+# Terminal shortcuts
+alias v='nvim'
+alias ls='eza -al --color=always --group-directories-first' # my preferred listing
+alias la='eza -a --color=always --group-directories-first'  # all files and dirs
+alias ll='eza -l --color=always --group-directories-first'  # long format
+alias lt='eza -aT --color=always --group-directories-first' # tree listing
+alias l.='eza -al --color=always --group-directories-first ../' # ls on the PARENT directory
+alias l..='eza -al --color=always --group-directories-first ../../' # ls on directory 2 levels up
+alias l...='eza -al --color=always --group-directories-first ../../../' # ls on directory 3 levels up
+alias grep='rg --color=auto'
+
+# adding flags
+alias df'dust'               # human-readable sizes
+alias free='free -m'           # show sizes in MB
+alias psa='procs auxf'
+alias psgrep='procs aux | grep -v grep | grep -i -e VSZ -e'
+alias psmem='procs auxf | sort -nr -k 4'
+alias pscpu='procs auxf | sort -nr -k 3'
