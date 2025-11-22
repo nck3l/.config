@@ -5,8 +5,7 @@ xinput set-prop 10 314 300, 300     # makes touchpad scroll slower (higher = slo
 xinput set-prop 10 316 1, 1         # makes touchpad scroll vertically and horizontally
 picom -b
 dunst -conf ~/.config/dunst/config &
-feh --bg-fill --random ~/Pictures/Wallpapers/
-#feh --bg-fill ~/Pictures/Wallpapers/VeilNebula19Jul25.jpg
+#feh --bg-fill --random ~/Pictures/Wallpapers/
 pkill pipewire
 /usr/bin/pipewire &
 
