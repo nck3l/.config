@@ -1,0 +1,24 @@
+#! /bin/sh
+
+xrdb -merge ~/.Xresources
+
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" ]; then
+	. "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile"
+else
+	. "$HOME/.xprofile"
+fi
+
+if [ -z "$XDG_RUNTIME_DIR" ]; then
+	XDG_RUNTIME_DIR="/tmp/$(id -u)-runtime-dir"
+	mkdir -pm 0700 "$XDG_RUNTIME_DIR"
+	export XDG_RUNTIME_DIR
+fi
+openrc -U default
+
+pkill pipewire
+/usr/libexec/pipewire-launcher &
+
+exec xautolock -time 10 -locker slock &
+exec slstatus &
+#exec conky | dwmstatus &
+exec dbus-launch --exit-with-session dwm
